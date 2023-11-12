@@ -43,6 +43,8 @@ export const useFukasawaGlobal = () => useContext(ThemeGlobalFukasawa)
  * @constructor
  */
 const LayoutBase = (props) => {
+  console.log('LayoutBase======props---', props);
+
   const { children, headerSlot, meta } = props
   const leftAreaSlot = <Live2D />
   const { onLoading } = useGlobal()

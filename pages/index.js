@@ -24,6 +24,7 @@ const Index = props => {
 export async function getStaticProps() {
   const from = 'index'
   const props = await getGlobalData({ from })
+  console.log('getStaticProps', props);
 
   const { siteInfo } = props
   props.posts = props.allPages?.filter(page => page.type === 'Post' && page.status === 'Published')
