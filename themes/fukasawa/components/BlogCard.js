@@ -25,7 +25,7 @@ const BlogCard = ({ index, post, showSummary, siteInfo }) => {
             <div className="flex flex-col justify-between h-full">
                 {/* 封面图 */}
                 {showPageCover && (
-                    <div className="flex-grow mb-3 w-full duration-200 cursor-pointer transform overflow-hidden">
+                    <div className="flex-grow mb-3 w-full duration-200 cursor-pointer transform overflow-hidden image_vertical">
                         <Link href={`${BLOG.SUB_PATH}/${post.slug}`} passHref legacyBehavior>
                             <LazyImage
                                 src={post?.pageCoverThumbnail}
