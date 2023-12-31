@@ -128,7 +128,6 @@ export async function getStaticProps({ params: { prefix } }) {
   // 文章内容加载
   if (!props?.posts?.blockMap) {
     props.post.blockMap = await getPostBlocks(props.post.id, from)
-    console.log('-----', props.post.blockMap);
   }
 
   // 生成全文索引 && process.env.npm_lifecycle_event === 'build' && JSON.parse(BLOG.ALGOLIA_RECREATE_DATA)
@@ -188,8 +187,6 @@ export function getRecommendPost(post, allPosts, count = 6) {
   if (recommendPosts.length > count) {
     recommendPosts = recommendPosts.slice(0, count)
   }
-  console.log('+++++getRecommendPost+++++', recommendPosts);
-
   return recommendPosts
 }
 

@@ -11,6 +11,7 @@ const BlogCard = ({ index, post, showSummary, siteInfo }) => {
     post.pageCoverThumbnail = siteInfo?.pageCover
   }
   const showPageCover = siteConfig('FUKASAWA_POST_LIST_COVER', null, CONFIG) && post?.pageCoverThumbnail
+  const SUB_PATH = siteConfig('SUB_PATH', '')
 
   return (
         <div
@@ -24,10 +25,10 @@ const BlogCard = ({ index, post, showSummary, siteInfo }) => {
             <div className="flex flex-col justify-between h-full">
                 {/* 封面图 */}
                 {showPageCover && (
-                    <div className="flex-grow mb-3 w-full duration-200 cursor-pointer transform overflow-hidden image_vertical">
-                        <Link href={`${siteConfig('SUB_PATH', '')}/${post.slug}`} passHref legacyBehavior>
+                    <div className="flex-grow mb-3 w-full duration-200 cursor-pointer transform overflow-hidden">
+                        <Link href={`${SUB_PATH}/${post.slug}`} passHref legacyBehavior>
                             <LazyImage
-                                src={post?.image || post?.pageCoverThumbnail}
+                                src={post?.pageCoverThumbnail}
                                 alt={post?.title || siteConfig('TITLE')}
                                 className="object-cover w-full h-full hover:scale-125 transform duration-500"
                             />
@@ -37,7 +38,7 @@ const BlogCard = ({ index, post, showSummary, siteInfo }) => {
 
                 {/* 文字部分 */}
                 <div className="flex flex-col w-full">
-                    <Link passHref href={`${siteConfig('SUB_PATH', '')}/${post.slug}`}
+                    <Link passHref href={`${SUB_PATH}/${post.slug}`}
                          className={`break-words cursor-pointer font-bold hover:underline text-xl ${showPreview ? 'justify-center' : 'justify-start'} leading-tight text-gray-700 dark:text-gray-100 hover:text-blue-500 dark:hover:text-blue-400`}
                     >
                         {post.title}
