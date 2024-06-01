@@ -2,9 +2,10 @@
   "cleanUrls": true,
   "trailingSlash": false,
   "headers": [],
-  "git": {
-    "deploymentEnabled": {
-        "main": false
-    }
+  "github": {
+    "enabled": true,
+    "autoJobCancelation": true,
+    "silent": false,
+    "ignoreCommand": "if [ \"$(git rev-parse --abbrev-ref HEAD)\" != \"deployBranch\" ]; then echo 'Ignored'; exit 0; fi"
   }
 }
