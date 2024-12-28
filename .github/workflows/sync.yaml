@@ -32,13 +32,15 @@ jobs:
           git remote add upstream https://github.com/love-Liushuang/NotionNext.git
           git fetch upstream
 
-      # 创建同步分支并合并上游更新
+      # 创建同步分支并合并上游更新（忽略 .github/workflows）
       - name: Sync updates from upstream
         run: |
           git checkout -b sync-updates
           git reset --hard upstream/main
-          git checkout HEAD -- . ':!.github/workflows' # 忽略 workflows 文件夹
-          git merge main --allow-unrelated-histories --no-edit
+          # 删除本地 `.github/workflows` 文件夹，避免同步到目标仓库
+          rm -rf .github/workflows
+          git add .
+          git commit -m "Sync updates from upstream, excluding workflows files" || echo "No changes to commit"
 
       # 确保合并后有更新
       - name: Verify changes
@@ -56,7 +58,7 @@ jobs:
         uses: peter-evans/create-pull-request@v5
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          commit-message: "Sync updates from upstream"
+          commit-message: "Sync updates from upstream (excluding workflows)"
           branch: sync-updates
           base: main
           title: "Sync updates from upstream"
