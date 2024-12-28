@@ -1,39 +1,52 @@
 name: Upstream Sync
 
-permissions:
-  contents: write
-
 on:
   schedule:
-    - cron: "0 0 * * *" # every day
+    - cron: "0 0 * * *" # 每天同步一次
   workflow_dispatch:
 
+permissions:
+  contents: write
+  pull-requests: write
+
 jobs:
-  sync_latest_from_upstream:
-    name: Sync latest commits from upstream repo
+  sync:
     runs-on: ubuntu-latest
-    if: ${{ github.event.repository.fork }}
-
     steps:
-      # Step 1: run a standard checkout action
-      - name: Checkout target repo
-        uses: actions/checkout@v4
-
-      # Step 2: run the sync action
-      - name: Sync upstream changes
-        id: sync
-        uses: aormsby/Fork-Sync-With-Upstream-action@v3.4
-        with:
-          upstream_sync_repo: tangly1024/NotionNext
-          upstream_sync_branch: main
-          target_sync_branch: main
-          target_repo_token: ${{ secrets.GITHUB_TOKEN }} # automatically generated, no need to set
-
-          # Set test_mode true to run tests instead of the true action!!
-          test_mode: false
-
-      - name: Sync check
-        if: failure()
+      - name: Set Git committer identity
         run: |
-          echo "[Error] 由于上游仓库的 workflow 文件变更，导致 GitHub 自动暂停了本次自动更新，你需要手动 Sync Fork 一次。
-          exit 1
+          git config --global user.name "GitHub Actions Bot"
+          git config --global user.email "actions@github.com"
+
+      - name: Checkout target repository
+        uses: actions/checkout@v3
+        with:
+          repository: love-Liushuang/NotionNextNews
+          ref: main
+
+      - name: Add upstream source repository
+        run: |
+          git remote add upstream https://github.com/love-Liushuang/NotionNext.git
+          git fetch upstream
+
+      - name: Sync updates from upstream
+        run: |
+          git checkout -b sync-updates
+          # 合并上游代码时，使用 "ours" 策略保留本地文件
+          git merge -X ours upstream/main --allow-unrelated-histories --no-edit || true
+
+      - name: Push updates to a new branch
+        run: |
+          git push origin sync-updates
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v5
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: "Sync updates from upstream"
+          branch: sync-updates
+          base: main
+          title: "Sync updates from upstream"
+          body: |
+            This Pull Request contains updates from the upstream repository.
+            Please review and merge if all checks pass.
