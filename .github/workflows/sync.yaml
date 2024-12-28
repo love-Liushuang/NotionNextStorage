@@ -21,7 +21,7 @@ jobs:
       - name: Checkout target repository
         uses: actions/checkout@v3
         with:
-          repository: love-Liushuang/NotionNextNews
+          repository: love-Liushuang/NotionNextStorage
           ref: main
 
       - name: Add upstream source repository
