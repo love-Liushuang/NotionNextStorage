@@ -3,7 +3,7 @@ name: Upstream Sync
 on:
   schedule:
     - cron: "0 0 * * *" # 每天同步一次
-  workflow_dispatch:
+  workflow_dispatch: # 手动触发
 
 permissions:
   contents: write
@@ -13,40 +13,55 @@ jobs:
   sync:
     runs-on: ubuntu-latest
     steps:
+      # 设置 Git 用户信息
       - name: Set Git committer identity
         run: |
           git config --global user.name "GitHub Actions Bot"
           git config --global user.email "actions@github.com"
 
+      # 检出目标仓库代码
       - name: Checkout target repository
         uses: actions/checkout@v3
         with:
           repository: love-Liushuang/NotionNextStorage
           ref: main
 
-      - name: Add upstream source repository
+      # 添加上游仓库并拉取更新
+      - name: Add upstream source repository and fetch updates
         run: |
           git remote add upstream https://github.com/love-Liushuang/NotionNext.git
           git fetch upstream
 
+      # 创建同步分支并合并上游更新（忽略 .github/workflows）
       - name: Sync updates from upstream
         run: |
           git checkout -b sync-updates
-          # 合并上游代码时，使用 "ours" 策略保留本地文件
-          git merge -X ours upstream/main --allow-unrelated-histories --no-edit || true
+          git reset --hard upstream/main
+          # 删除本地 `.github/workflows` 文件夹，避免同步到目标仓库
+          rm -rf .github/workflows
+          git add .
+          git commit -m "Sync updates from upstream, excluding workflows files" || echo "No changes to commit"
 
+      # 确保合并后有更新
+      - name: Verify changes
+        run: |
+          git status
+          git diff --stat || echo "No changes detected."
+
+      # 推送同步分支到目标仓库
       - name: Push updates to a new branch
         run: |
-          git push origin sync-updates
+          git push origin sync-updates --force
 
+      # 创建 Pull Request
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v5
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          commit-message: "Sync updates from upstream"
+          commit-message: "Sync updates from upstream (excluding workflows)"
           branch: sync-updates
           base: main
           title: "Sync updates from upstream"
           body: |
-            This Pull Request contains updates from the upstream repository.
+            This Pull Request contains updates from the upstream repository, excluding workflows files.
             Please review and merge if all checks pass.
