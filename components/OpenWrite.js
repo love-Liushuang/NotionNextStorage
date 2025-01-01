@@ -67,7 +67,7 @@ const OpenWrite = () => {
         return () => clearInterval(intervalId)
       }
     } catch (error) {
-      console.error('OpenWrite 加载异常', error)
+      alert('OpenWrite 加载异常', error)
     }
   }
   useEffect(() => {
