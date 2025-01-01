@@ -54,8 +54,7 @@ alert(BTWPlugin)
         const intervalId = setInterval(() => {
           const readMoreWrapElement = document.getElementById('read-more-wrap')
           const articleWrapElement = document.getElementById('article-wrapper')
-alert(readMoreWrapElement)
-            alert(articleWrapElement)
+            // alert(`${articleWrapElement},${readMoreWrapElement}`)
           if (!readMoreWrapElement && articleWrapElement) {
             toggleTocItems(false) // 恢复目录项的点击
             // 自动调整文章区域的高度
