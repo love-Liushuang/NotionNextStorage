@@ -32,7 +32,7 @@ const Twikoo = ({ isDarkMode }) => {
           // region: 'ap-guangzhou', // 环境地域，默认为 ap-shanghai，腾讯云环境填 ap-shanghai 或 ap-guangzhou；Vercel 环境不填
           // path: location.pathname, // 用于区分不同文章的自定义 js 路径，如果您的文章路径不是 location.pathname，需传此参数
         })
-        console.log('twikoo init', twikoo)
+        // console.log('twikoo init', twikoo)
         isInit.current = true
       }
     } catch (error) {
@@ -43,7 +43,7 @@ const Twikoo = ({ isDarkMode }) => {
   useEffect(() => {
     const interval = setInterval(() => {
       if (isInit.current) {
-        console.log('twioo init! clear interval')
+        // console.log('twioo init! clear interval')
         clearInterval(interval)
       } else {
         loadTwikoo()

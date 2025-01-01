@@ -42,7 +42,6 @@ import SearchNav from './components/SearchNav'
 import SideRight from './components/SideRight'
 import CONFIG from './config'
 import { Style } from './style'
-import AISummary from '@/components/AISummary'
 
 /**
  * 基础布局 采用上中下布局，移动端使用顶部侧边导航栏
@@ -267,7 +266,6 @@ const LayoutSlug = props => {
     siteConfig('COMMENT_WEBMENTION_ENABLE')
 
   const router = useRouter()
-  const waiting404 = siteConfig('POST_WAITING_TIME_FOR_404') * 1000
   useEffect(() => {
     // 404
     if (!post) {
@@ -284,7 +282,7 @@ const LayoutSlug = props => {
             }
           }
         },
-        waiting404
+        siteConfig('POST_WAITING_TIME_FOR_404') * 1000
       )
     }
   }, [post])
@@ -306,7 +304,6 @@ const LayoutSlug = props => {
               <section
                 className='wow fadeInUp p-5 justify-center mx-auto'
                 data-wow-delay='.2s'>
-                <AISummary aiSummary={post.aiSummary}/>
                 <WWAds orientation='horizontal' className='w-full' />
                 {post && <NotionPage post={post} />}
                 <WWAds orientation='horizontal' className='w-full' />

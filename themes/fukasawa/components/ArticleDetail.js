@@ -53,7 +53,7 @@ export default function ArticleDetail(props) {
 
           <section className='flex-wrap flex mt-2 text-gray-400 dark:text-gray-400 font-light leading-8'>
             <div>
-              {post?.category && (
+              {/* {post?.category && (
                 <>
                   <Link
                     href={`/category/${post.category}`}
@@ -64,11 +64,11 @@ export default function ArticleDetail(props) {
                   </Link>
                   <span className='mr-2'>|</span>
                 </>
-              )}
+              )} */}
 
               {post?.type !== 'Page' && (
                 <>
-                  <Link
+                  {/* <Link
                     href={`/archive#${formatDateFmt(post?.publishDate, 'yyyy-MM')}`}
                     passHref
                     className='pl-1 mr-2 cursor-pointer hover:text-gray-700 dark:hover:text-gray-200 border-b dark:border-gray-500 border-dashed'>
@@ -77,7 +77,7 @@ export default function ArticleDetail(props) {
                   <span className='mr-2'>|</span>
                   <span className='mx-2 text-gray-400 dark:text-gray-500'>
                     {locale.COMMON.LAST_EDITED_TIME}: {post.lastEditedDay}
-                  </span>
+                  </span> */}
                 </>
               )}
 
