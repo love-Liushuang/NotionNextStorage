@@ -78,22 +78,22 @@ const OpenWrite = () => {
     }
     if (isSignedIn) {
       // 用户已登录免检
-      console.log('用户已登录')
+      alert('用户已登录')
       return
     }
 
     // 开发环境免检
-    if (process.env.NODE_ENV === 'development') {
-      console.log('开发环境:屏蔽OpenWrite')
-      return
-    }
-
+    // if (process.env.NODE_ENV === 'development') {
+    //   console.log('开发环境:屏蔽OpenWrite')
+    //   return
+    // }
+    alert(`${isBrowser},${blogId},${isSignedIn}`)
     if (isBrowser && blogId && !isSignedIn) {
       toggleTocItems(true) // 禁止目录项的点击
 
       // Check if the element with id 'read-more-wrap' already exists
       const readMoreWrap = document.getElementById('read-more-wrap')
-
+        alert(readMoreWrap)
       // Only load the script if the element doesn't exist
       if (!readMoreWrap) {
         loadOpenWrite()
@@ -145,7 +145,7 @@ function existedWhiteList(path, whiteListStr) {
   const isWhite = whiteListStr.includes(processedPath)
 
   if (isWhite) {
-    console.log('OpenWrite白名单', processedPath)
+    alert('OpenWrite白名单', processedPath)
   }
 
   return isWhite
