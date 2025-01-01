@@ -68,8 +68,6 @@ const BlogListScroll = ({ posts }) => {
     setFilterPostsGroups((prev) => [...prev, newFilterPosts]);
   }, [posts, page]);
 
-  // console.log('这ci又是在哪---', posts, siteInfo);
-
   if (!posts || posts.length === 0) {
     return <BlogPostListEmpty />;
   } else {

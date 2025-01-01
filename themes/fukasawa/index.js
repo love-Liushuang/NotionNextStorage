@@ -137,6 +137,7 @@ const LayoutPostList = props => {
 const LayoutSlug = props => {
   const { post, lock, validPassword } = props
   const router = useRouter()
+  const waiting404 = siteConfig('POST_WAITING_TIME_FOR_404') * 1000
   useEffect(() => {
     // 404
     if (!post) {
@@ -151,7 +152,7 @@ const LayoutSlug = props => {
             }
           }
         },
-        siteConfig('POST_WAITING_TIME_FOR_404') * 1000
+        waiting404
       )
     }
   }, [post])
@@ -213,7 +214,29 @@ const LayoutArchive = props => {
  * @returns
  */
 const Layout404 = props => {
-  return <>404</>
+  const router = useRouter()
+  useEffect(() => {
+    // 延时3秒如果加载失败就返回首页
+    setTimeout(() => {
+      const article = isBrowser && document.getElementById('article-wrapper')
+      if (!article) {
+        router.push('/').then(() => {
+          // console.log('找不到页面', router.asPath)
+        })
+      }
+    }, 3000)
+  }, [])
+
+  return <>
+        <div className='md:-mt-20 text-black w-full h-screen text-center justify-center content-center items-center flex flex-col'>
+            <div className='dark:text-gray-200'>
+                <h2 className='inline-block border-r-2 border-gray-600 mr-2 px-3 py-2 align-top'><i className='mr-2 fas fa-spinner animate-spin' />404</h2>
+                <div className='inline-block text-left h-32 leading-10 items-center'>
+                    <h2 className='m-0 p-0'>页面无法加载，即将返回首页</h2>
+                </div>
+            </div>
+        </div>
+    </>
 }
 
 /**
@@ -224,36 +247,35 @@ const Layout404 = props => {
 const LayoutCategoryIndex = props => {
   const { locale } = useGlobal()
   const { categoryOptions } = props
-  return <></>
-//   return (
-//     <>
-//       <div className='bg-white dark:bg-gray-700 px-10 py-10 shadow'>
-//         <div className='dark:text-gray-200 mb-5'>
-//           <i className='mr-4 fas fa-th' />
-//           {locale.COMMON.CATEGORY}:
-//         </div>
-//         <div id='category-list' className='duration-200 flex flex-wrap'>
-//           {categoryOptions?.map(category => {
-//             return (
-//               <Link
-//                 key={category.name}
-//                 href={`/category/${category.name}`}
-//                 passHref
-//                 legacyBehavior>
-//                 <div
-//                   className={
-//                     'hover:text-black dark:hover:text-white dark:text-gray-300 dark:hover:bg-gray-600 px-5 cursor-pointer py-2 hover:bg-gray-100'
-//                   }>
-//                   <i className='mr-4 fas fa-folder' />
-//                   {category.name}({category.count})
-//                 </div>
-//               </Link>
-//             )
-//           })}
-//         </div>
-//       </div>
-//     </>
-//   )
+  return (
+    <>
+      <div className='bg-white dark:bg-gray-700 px-10 py-10 shadow'>
+        <div className='dark:text-gray-200 mb-5'>
+          <i className='mr-4 fas fa-th' />
+          {locale.COMMON.CATEGORY}:
+        </div>
+        <div id='category-list' className='duration-200 flex flex-wrap'>
+          {categoryOptions?.map(category => {
+            return (
+              <Link
+                key={category.name}
+                href={`/category/${category.name}`}
+                passHref
+                legacyBehavior>
+                <div
+                  className={
+                    'hover:text-black dark:hover:text-white dark:text-gray-300 dark:hover:bg-gray-600 px-5 cursor-pointer py-2 hover:bg-gray-100'
+                  }>
+                  <i className='mr-4 fas fa-folder' />
+                  {category.name}({category.count})
+                </div>
+              </Link>
+            )
+          })}
+        </div>
+      </div>
+    </>
+  )
 }
 
 /**
@@ -264,26 +286,25 @@ const LayoutCategoryIndex = props => {
 const LayoutTagIndex = props => {
   const { locale } = useGlobal()
   const { tagOptions } = props
-  return <></>
-//   return (
-//     <>
-//       <div className='bg-white dark:bg-gray-700 px-10 py-10 shadow'>
-//         <div className='dark:text-gray-200 mb-5'>
-//           <i className='mr-4 fas fa-tag' />
-//           {locale.COMMON.TAGS}:
-//         </div>
-//         <div id='tags-list' className='duration-200 flex flex-wrap ml-8'>
-//           {tagOptions.map(tag => {
-//             return (
-//               <div key={tag.name} className='p-2'>
-//                 <TagItemMini key={tag.name} tag={tag} />
-//               </div>
-//             )
-//           })}
-//         </div>
-//       </div>
-//     </>
-//   )
+  return (
+    <>
+      <div className='bg-white dark:bg-gray-700 px-10 py-10 shadow'>
+        <div className='dark:text-gray-200 mb-5'>
+          <i className='mr-4 fas fa-tag' />
+          {locale.COMMON.TAGS}:
+        </div>
+        <div id='tags-list' className='duration-200 flex flex-wrap ml-8'>
+          {tagOptions.map(tag => {
+            return (
+              <div key={tag.name} className='p-2'>
+                <TagItemMini key={tag.name} tag={tag} />
+              </div>
+            )
+          })}
+        </div>
+      </div>
+    </>
+  )
 }
 
 export {

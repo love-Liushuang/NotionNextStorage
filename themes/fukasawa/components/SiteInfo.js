@@ -41,9 +41,9 @@ function SiteInfo({ title }) {
         <span className='text-xs font-serif'>
           Powered by
           <a
-            href='https://1314news.net'
+            href='https://github.com/tangly1024/NotionNext'
             className='underline'>
-            1314news.net
+            NotionNext {siteConfig('VERSION')}
           </a>
         </span>
         <br />

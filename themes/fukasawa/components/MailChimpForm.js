@@ -19,7 +19,7 @@ export default function MailChimpForm() {
       e.preventDefault()
       const email = document.querySelector('#newsletter').value
       subscribeToNewsletter(email).then(response => {
-        // console.log('Subscription succeeded:', response)
+        console.log('Subscription succeeded:', response)
         // 在此处添加成功订阅后的操作
         setSuccess(true)
       })
