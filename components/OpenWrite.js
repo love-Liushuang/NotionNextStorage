@@ -34,9 +34,9 @@ const OpenWrite = () => {
         'https://readmore.openwrite.cn/js/readmore-2.0.js',
         'js'
       )
-        alert('OpenWrite 加载成功')
+        alert('4---OpenWrite 加载成功')
       const BTWPlugin = window?.BTWPlugin
-alert(BTWPlugin)
+        alert(`5--${BTWPlugin}`)
       if (BTWPlugin) {
         const btw = new BTWPlugin()
         window.btw = btw
@@ -71,7 +71,8 @@ alert(BTWPlugin)
       alert('OpenWrite 加载异常', error)
     }
   }
-  useEffect(() => {
+    useEffect(() => {
+      alert(`1---${isLoaded},${router}`)
     const existWhite = existedWhiteList(router.asPath, whiteList)
     // 白名单中，免检
     if (existWhite) {
@@ -88,13 +89,13 @@ alert(BTWPlugin)
     //   console.log('开发环境:屏蔽OpenWrite')
     //   return
     // }
-    alert(`${isBrowser},${blogId},${isSignedIn}`)
+    alert(`2---${isBrowser},${blogId},${isSignedIn}`)
     if (isBrowser && blogId && !isSignedIn) {
       toggleTocItems(true) // 禁止目录项的点击
 
       // Check if the element with id 'read-more-wrap' already exists
       const readMoreWrap = document.getElementById('read-more-wrap')
-        alert(readMoreWrap)
+        alert(`3---${readMoreWrap}`)
       // Only load the script if the element doesn't exist
       if (!readMoreWrap) {
         loadOpenWrite()
