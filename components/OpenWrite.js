@@ -34,8 +34,9 @@ const OpenWrite = () => {
         'https://readmore.openwrite.cn/js/readmore-2.0.js',
         'js'
       )
+        alert('OpenWrite 加载成功')
       const BTWPlugin = window?.BTWPlugin
-
+alert(BTWPlugin)
       if (BTWPlugin) {
         const btw = new BTWPlugin()
         window.btw = btw
@@ -53,7 +54,8 @@ const OpenWrite = () => {
         const intervalId = setInterval(() => {
           const readMoreWrapElement = document.getElementById('read-more-wrap')
           const articleWrapElement = document.getElementById('article-wrapper')
-
+alert(readMoreWrapElement)
+            alert(articleWrapElement)
           if (!readMoreWrapElement && articleWrapElement) {
             toggleTocItems(false) // 恢复目录项的点击
             // 自动调整文章区域的高度
