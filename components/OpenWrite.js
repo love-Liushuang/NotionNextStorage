@@ -34,9 +34,8 @@ const OpenWrite = () => {
         'https://readmore.openwrite.cn/js/readmore-2.0.js',
         'js'
       )
-        alert('4---OpenWrite 加载成功')
       const BTWPlugin = window?.BTWPlugin
-        alert(`5--${BTWPlugin}`)
+
       if (BTWPlugin) {
         const btw = new BTWPlugin()
         window.btw = btw
@@ -54,7 +53,7 @@ const OpenWrite = () => {
         const intervalId = setInterval(() => {
           const readMoreWrapElement = document.getElementById('read-more-wrap')
           const articleWrapElement = document.getElementById('article-wrapper')
-            // alert(`${articleWrapElement},${readMoreWrapElement}`)
+
           if (!readMoreWrapElement && articleWrapElement) {
             toggleTocItems(false) // 恢复目录项的点击
             // 自动调整文章区域的高度
@@ -68,11 +67,10 @@ const OpenWrite = () => {
         return () => clearInterval(intervalId)
       }
     } catch (error) {
-      alert('OpenWrite 加载异常', error)
+      console.error('OpenWrite 加载异常', error)
     }
   }
-    useEffect(() => {
-      alert(`1---${isLoaded},${router}`)
+  useEffect(() => {
     const existWhite = existedWhiteList(router.asPath, whiteList)
     // 白名单中，免检
     if (existWhite) {
@@ -80,22 +78,22 @@ const OpenWrite = () => {
     }
     if (isSignedIn) {
       // 用户已登录免检
-      alert('用户已登录')
+      console.log('用户已登录')
       return
     }
 
     // 开发环境免检
-    // if (process.env.NODE_ENV === 'development') {
-    //   console.log('开发环境:屏蔽OpenWrite')
-    //   return
-    // }
-    alert(`2---${isBrowser},${blogId},${isSignedIn}`)
+    if (process.env.NODE_ENV === 'development') {
+      console.log('开发环境:屏蔽OpenWrite')
+      return
+    }
+
     if (isBrowser && blogId && !isSignedIn) {
       toggleTocItems(true) // 禁止目录项的点击
 
       // Check if the element with id 'read-more-wrap' already exists
       const readMoreWrap = document.getElementById('read-more-wrap')
-        alert(`3---${readMoreWrap}`)
+
       // Only load the script if the element doesn't exist
       if (!readMoreWrap) {
         loadOpenWrite()
@@ -147,7 +145,7 @@ function existedWhiteList(path, whiteListStr) {
   const isWhite = whiteListStr.includes(processedPath)
 
   if (isWhite) {
-    alert('OpenWrite白名单', processedPath)
+    console.log('OpenWrite白名单', processedPath)
   }
 
   return isWhite
