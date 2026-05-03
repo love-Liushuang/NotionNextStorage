@@ -119,86 +119,87 @@ function AsideLeft(props) {
   }, [FUKASAWA_SIDEBAR_COLLAPSE_ON_SCROLL, post])
 
   return (
-    <div
-      className={`sideLeft relative ${isCollapsed ? 'w-0' : 'w-80'} duration-300 transition-all bg-white dark:bg-hexo-black-gray min-h-screen hidden lg:block z-20`}>
-      {/* 悬浮的折叠按钮 */}
-      {FUKASAWA_SIDEBAR_COLLAPSE_BUTTON && (
-        <div
-          className={`${position} hidden lg:block fixed top-0 cursor-pointer hover:scale-110 duration-300 px-3 py-2 dark:text-white`}
-          onClick={toggleOpen}>
-          {isCollapsed ? (
-            <i className='fa-solid fa-indent text-xl'></i>
-          ) : (
-            <i className='fas fa-bars text-xl'></i>
-          )}
-        </div>
-      )}
+    <></>
+    // <div
+    //   className={`sideLeft relative ${isCollapsed ? 'w-0' : 'w-80'} duration-300 transition-all bg-white dark:bg-hexo-black-gray min-h-screen hidden lg:block z-20`}>
+    //   {/* 悬浮的折叠按钮 */}
+    //   {FUKASAWA_SIDEBAR_COLLAPSE_BUTTON && (
+    //     <div
+    //       className={`${position} hidden lg:block fixed top-0 cursor-pointer hover:scale-110 duration-300 px-3 py-2 dark:text-white`}
+    //       onClick={toggleOpen}>
+    //       {isCollapsed ? (
+    //         <i className='fa-solid fa-indent text-xl'></i>
+    //       ) : (
+    //         <i className='fas fa-bars text-xl'></i>
+    //       )}
+    //     </div>
+    //   )}
 
-      <div className={`h-full ${isCollapsed ? 'hidden' : 'p-8'}`}>
-        <Logo {...props} />
+    //   <div className={`h-full ${isCollapsed ? 'hidden' : 'p-8'}`}>
+    //     <Logo {...props} />
 
-        <section className='siteInfo flex flex-col dark:text-gray-300 pt-8'>
-          {siteConfig('DESCRIPTION')}
-        </section>
+    //     <section className='siteInfo flex flex-col dark:text-gray-300 pt-8'>
+    //       {siteConfig('DESCRIPTION')}
+    //     </section>
 
-        <section className='flex flex-col text-gray-600'>
-          <div className='w-12 my-4' />
-          <MenuList {...props} />
-        </section>
+    //     <section className='flex flex-col text-gray-600'>
+    //       <div className='w-12 my-4' />
+    //       <MenuList {...props} />
+    //     </section>
 
-        <section className='flex flex-col text-gray-600'>
-          <div className='w-12 my-4' />
-          <SearchInput {...props} />
-        </section>
+    //     <section className='flex flex-col text-gray-600'>
+    //       <div className='w-12 my-4' />
+    //       <SearchInput {...props} />
+    //     </section>
 
-        <section className='flex flex-col dark:text-gray-300'>
-          <div className='w-12 my-4' />
-          <Announcement post={notice} />
-        </section>
+    //     <section className='flex flex-col dark:text-gray-300'>
+    //       <div className='w-12 my-4' />
+    //       <Announcement post={notice} />
+    //     </section>
 
-        <section>
-          <MailChimpForm />
-        </section>
+    //     <section>
+    //       <MailChimpForm />
+    //     </section>
 
-        <section>
-          <AdSlot type='in-article' />
-        </section>
+    //     <section>
+    //       <AdSlot type='in-article' />
+    //     </section>
 
-        {router.asPath !== '/tag' && (
-          <section className='flex flex-col'>
-            <div className='w-12 my-4' />
-            <GroupTag tags={tagOptions} currentTag={currentTag} />
-          </section>
-        )}
+    //     {router.asPath !== '/tag' && (
+    //       <section className='flex flex-col'>
+    //         <div className='w-12 my-4' />
+    //         <GroupTag tags={tagOptions} currentTag={currentTag} />
+    //       </section>
+    //     )}
 
-        {router.asPath !== '/category' && (
-          <section className='flex flex-col'>
-            <div className='w-12 my-4' />
-            <GroupCategory
-              categories={categoryOptions}
-              currentCategory={currentCategory}
-            />
-          </section>
-        )}
+    //     {router.asPath !== '/category' && (
+    //       <section className='flex flex-col'>
+    //         <div className='w-12 my-4' />
+    //         <GroupCategory
+    //           categories={categoryOptions}
+    //           currentCategory={currentCategory}
+    //         />
+    //       </section>
+    //     )}
 
-        <section className='flex flex-col'>
-          <div className='w-12 my-4' />
-          <SocialButton />
-          <SiteInfo />
-        </section>
+    //     <section className='flex flex-col'>
+    //       <div className='w-12 my-4' />
+    //       <SocialButton />
+    //       <SiteInfo />
+    //     </section>
 
-        <section className='flex justify-center dark:text-gray-200 pt-4'>
-          <DarkModeButton />
-        </section>
+    //     <section className='flex justify-center dark:text-gray-200 pt-4'>
+    //       <DarkModeButton />
+    //     </section>
 
-        <section className='sticky top-0 pt-12  flex flex-col max-h-screen '>
-          <Catalog toc={post?.toc} />
-          <div className='flex justify-center'>
-            <div>{slot}</div>
-          </div>
-        </section>
-      </div>
-    </div>
+    //     <section className='sticky top-0 pt-12  flex flex-col max-h-screen '>
+    //       <Catalog toc={post?.toc} />
+    //       <div className='flex justify-center'>
+    //         <div>{slot}</div>
+    //       </div>
+    //     </section>
+    //   </div>
+    // </div>
   )
 }
 

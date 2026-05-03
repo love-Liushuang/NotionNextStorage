@@ -11,7 +11,7 @@ import { Transition } from '@headlessui/react'
 import dynamic from 'next/dynamic'
 import SmartLink from '@/components/SmartLink'
 import { useRouter } from 'next/router'
-import { createContext, useContext, useEffect, useRef } from 'react'
+import { createContext, useContext, useEffect, useRef, useState } from 'react'
 import ArticleDetail from './components/ArticleDetail'
 import ArticleLock from './components/ArticleLock'
 import AsideLeft from './components/AsideLeft'
@@ -99,14 +99,115 @@ const LayoutBase = props => {
     </ThemeGlobalFukasawa.Provider>
   )
 }
+// /**
+//  * 首页
+//  * @param {*} props notion数据
+//  * @returns 首页就是一个博客列表
+//  */
+// const LayoutIndex = props => {
+//     return <LayoutPostList {...props} />
+// }
 
 /**
  * 首页
- * @param {*} props notion数据
- * @returns 首页就是一个博客列表
+ * @returns 首页搜索
  */
-const LayoutIndex = props => {
-  return <LayoutPostList {...props} />
+const LayoutIndex = () => {
+  return <HomeSearch />
+}
+
+const HomeSearch = () => {
+  const { locale } = useGlobal()
+  const { searchModal } = useFukasawaGlobal()
+  const router = useRouter()
+  const inputRef = useRef(null)
+  const [onLoading, setLoadingState] = useState(false)
+  const algoliaEnabled = siteConfig('ALGOLIA_APP_ID')
+  const title = siteConfig('TITLE')
+  const description = siteConfig('DESCRIPTION')
+
+  const getPreservedQuery = () => {
+    const query = {}
+    const keys = ['theme', 'mode', 'lite']
+    keys.forEach(key => {
+      if (router.query?.[key]) {
+        query[key] = router.query[key]
+      }
+    })
+    return query
+  }
+
+  const handleSearch = e => {
+    e?.preventDefault()
+
+    if (algoliaEnabled) {
+      searchModal?.current?.openSearch()
+      return
+    }
+
+    const keyword = inputRef.current?.value?.trim()
+    if (!keyword) {
+      inputRef.current?.focus()
+      return
+    }
+
+    setLoadingState(true)
+    router
+      .push({
+        pathname: '/search/[keyword]',
+        query: {
+          keyword,
+          ...getPreservedQuery()
+        }
+      })
+      .finally(() => setLoadingState(false))
+  }
+
+  const handleFocus = () => {
+    if (algoliaEnabled) {
+      searchModal?.current?.openSearch()
+    }
+  }
+
+  return (
+    <section className='flex min-h-[65vh] w-full items-center justify-center px-4 py-16 md:px-10'>
+      <div className='w-full max-w-3xl'>
+        <div className='mb-8 text-center'>
+          <h1 className='text-3xl font-black leading-tight text-gray-900 dark:text-gray-100 md:text-5xl'>
+            {title}
+          </h1>
+          {description && (
+            <p className='mx-auto mt-4 max-w-2xl text-base leading-7 text-gray-500 dark:text-gray-400 md:text-lg'>
+              {description}
+            </p>
+          )}
+        </div>
+
+        <form onSubmit={handleSearch} className='w-full'>
+          <div className='flex h-16 w-full items-center border-2 border-gray-900 bg-white px-5 shadow-md transition focus-within:shadow-xl dark:border-gray-200 dark:bg-hexo-black-gray md:h-20'>
+            <i className='fas fa-search mr-4 text-xl text-gray-400 md:text-2xl' />
+            <input
+              ref={inputRef}
+              type='search'
+              autoComplete='off'
+              aria-label={locale.SEARCH.ARTICLES}
+              placeholder={locale.SEARCH.ARTICLES}
+              onFocus={handleFocus}
+              className='h-full min-w-0 flex-1 bg-transparent text-lg font-light text-gray-900 outline-none placeholder:text-gray-400 dark:text-gray-100 md:text-2xl'
+            />
+            <button
+              type='submit'
+              aria-label={locale.NAV.SEARCH}
+              className='ml-4 flex h-11 w-11 flex-none items-center justify-center bg-gray-900 text-white transition hover:bg-gray-700 dark:bg-gray-100 dark:text-black dark:hover:bg-gray-300 md:h-12 md:w-12'>
+              <i
+                className={`fas ${onLoading ? 'fa-spinner animate-spin' : 'fa-arrow-right'}`}
+              />
+            </button>
+          </div>
+        </form>
+      </div>
+    </section>
+  )
 }
 
 /**
@@ -287,25 +388,26 @@ const LayoutCategoryIndex = props => {
 const LayoutTagIndex = props => {
   const { locale } = useGlobal()
   const { tagOptions } = props
-  return (
-    <>
-      <div className='bg-white dark:bg-gray-700 px-10 py-10 shadow'>
-        <div className='dark:text-gray-200 mb-5'>
-          <i className='mr-4 fas fa-tag' />
-          {locale.COMMON.TAGS}:
-        </div>
-        <div id='tags-list' className='duration-200 flex flex-wrap ml-8'>
-          {tagOptions.map(tag => {
-            return (
-              <div key={tag.name} className='p-2'>
-                <TagItemMini key={tag.name} tag={tag} />
-              </div>
-            )
-          })}
-        </div>
-      </div>
-    </>
-  )
+  return <></>
+//   return (
+//     <>
+//       <div className='bg-white dark:bg-gray-700 px-10 py-10 shadow'>
+//         <div className='dark:text-gray-200 mb-5'>
+//           <i className='mr-4 fas fa-tag' />
+//           {locale.COMMON.TAGS}:
+//         </div>
+//         <div id='tags-list' className='duration-200 flex flex-wrap ml-8'>
+//           {tagOptions.map(tag => {
+//             return (
+//               <div key={tag.name} className='p-2'>
+//                 <TagItemMini key={tag.name} tag={tag} />
+//               </div>
+//             )
+//           })}
+//         </div>
+//       </div>
+//     </>
+//   )
 }
 
 export {
