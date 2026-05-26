@@ -1,6 +1,6 @@
 import BLOG from '@/blog.config'
 import useNotification from '@/components/Notification'
-import TechGrow from '@/components/TechGrow'
+import ReadmoreCodeGate from '@/components/ReadmoreCodeGate'
 import { siteConfig } from '@/lib/config'
 import { fetchGlobalAllData, resolvePostProps } from '@/lib/db/SiteDataApi'
 import { useGlobal } from '@/lib/global'
@@ -91,8 +91,8 @@ const Slug = props => {
       <DynamicLayout theme={theme} layoutName='LayoutSlug' {...props} />
       {/* 解锁密码提示框 */}
       {post?.password && post?.password !== '' && !lock && <Notification />}
-      {/* 导流工具 */}
-      <TechGrow lock={lock} />
+      {/* 公众号验证码解锁 */}
+      <ReadmoreCodeGate lock={lock} />
     </>
   )
 }
