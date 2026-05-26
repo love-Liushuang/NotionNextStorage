@@ -35,7 +35,7 @@ module.exports = {
   READMORE_HEIGHT:
     process.env.NEXT_PUBLIC_READMORE_HEIGHT ||
     process.env.READMORE_HEIGHT ||
-    480,
+    218,
   READMORE_WHITE_LIST:
     process.env.NEXT_PUBLIC_READMORE_WHITE_LIST ||
     process.env.READMORE_WHITE_LIST ||

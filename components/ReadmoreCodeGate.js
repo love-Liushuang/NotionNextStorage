@@ -128,7 +128,7 @@ const ReadmoreCodeGate = ({ lock } = {}) => {
   const qrcode = getFirstConfig(['READMORE_QRCODE'], '')
   const btnText = getFirstConfig(['READMORE_BTN_TEXT'], '关注公众号，获取验证码，阅读全文')
   const contentId = getFirstConfig(['READMORE_CONTENT_ID'], 'notion-article')
-  const height = getFirstConfig(['READMORE_HEIGHT'], 480)
+  const height = getFirstConfig(['READMORE_HEIGHT'], 218)
   const whiteList = getFirstConfig(['READMORE_WHITE_LIST'], '')
   const yellowList = getFirstConfig(['READMORE_YELLOW_LIST'], '')
   const lockToc = getFirstConfig(['READMORE_LOCK_TOC'], 'yes')
@@ -350,7 +350,7 @@ const ReadmoreCodeGate = ({ lock } = {}) => {
           border: 1px solid rgba(80, 96, 116, 0.18);
           border-radius: 14px;
           background: rgba(255, 255, 255, 0.96);
-          box-shadow: 0 18px 50px rgba(22, 34, 48, 0.14);
+          box-shadow: 0 0 50px rgba(22, 34, 48, 0.34);
           padding: 18px;
         }
         .dark .readmore-code-panel {
