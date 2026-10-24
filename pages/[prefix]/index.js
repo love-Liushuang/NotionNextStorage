@@ -1,5 +1,6 @@
 import BLOG from '@/blog.config'
 import useNotification from '@/components/Notification'
+import TechGrow from '@/components/TechGrow'
 import ReadmoreCodeGate from '@/components/ReadmoreCodeGate'
 import { siteConfig } from '@/lib/config'
 import { resolvePostProps } from '@/lib/db/SiteDataApi'
